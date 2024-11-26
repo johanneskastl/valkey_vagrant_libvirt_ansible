@@ -1,0 +1,47 @@
+---
+- name: 'Configure and start valkey@vagrant-libvirt'
+  hosts: 'all'
+  gather_facts: true
+  become: true
+
+  handlers:
+
+    - name: 'Restart the valkey@vagrant-libvirt service'
+      ansible.builtin.service:
+        name: 'valkey@vagrant-libvirt'
+        state: 'restarted'
+      when:
+        - 'not valkey_service_started.changed | bool'
+
+  tasks:
+
+    - name: 'Create /etc/systemd/system/kanidmd.service.d/run_as_nonroot_user.conf'
+      ansible.builtin.template:
+        src: 'vagrant-libvirt.conf.j2'
+        dest: '/etc/valkey/vagrant-libvirt.conf'
+        owner: 'root'
+        group: 'valkey'
+        mode: '640'
+      notify:
+        - 'Restart the valkey@vagrant-libvirt service'
+
+    - name: 'Create the directory /var/lib/valkey/vagrant-libvirt'
+      ansible.builtin.file:
+        path: '/var/lib/valkey/vagrant-libvirt'
+        state: 'directory'
+        owner: 'valkey'
+        group: 'valkey'
+        mode: '0750'
+      notify:
+        - 'Restart the valkey@vagrant-libvirt service'
+
+    - name: 'Start the valkey@vagrant-libvirt service'
+      ansible.builtin.service:
+        name: 'valkey@vagrant-libvirt'
+        state: 'started'
+      register: valkey_service_started
+
+    - name: 'Enable the valkey@vagrant-libvirt service'
+      ansible.builtin.service:
+        name: 'valkey@vagrant-libvirt'
+        enabled: true
