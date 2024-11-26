@@ -29,3 +29,6 @@
 
 - name: 'Run playbook-all_nodes-install_valkey.yml'
   ansible.builtin.import_playbook: playbook-all_nodes-install_valkey.yml
+
+- name: 'Run playbook-all_nodes-configure_and_start_valkey.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-configure_and_start_valkey.yml
