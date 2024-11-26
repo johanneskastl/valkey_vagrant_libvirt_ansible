@@ -22,3 +22,10 @@
 
 - name: 'Run playbook-all_nodes-minimal_bashrc.yml'
   ansible.builtin.import_playbook: playbook-all_nodes-minimal_bashrc.yml
+
+#
+# Valkey
+#
+
+- name: 'Run playbook-all_nodes-install_valkey.yml'
+  ansible.builtin.import_playbook: playbook-all_nodes-install_valkey.yml
