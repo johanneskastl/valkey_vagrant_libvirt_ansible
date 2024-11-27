@@ -1,5 +1,5 @@
 ---
-- name: 'Install valkey^'
+- name: 'Install valkey'
   hosts: 'all'
   gather_facts: true
   become: true
