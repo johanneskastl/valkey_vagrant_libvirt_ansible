@@ -15,7 +15,7 @@
 
   tasks:
 
-    - name: 'Create /etc/systemd/system/kanidmd.service.d/run_as_nonroot_user.conf'
+    - name: 'Create /etc/valkey/vagrant-libvirt.conf'
       ansible.builtin.template:
         src: 'vagrant-libvirt.conf.j2'
         dest: '/etc/valkey/vagrant-libvirt.conf'
